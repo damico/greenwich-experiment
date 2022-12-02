@@ -36,6 +36,13 @@ The main software that controls the GPS receiver is the GPSD, which is available
  - Receivers conf at: 
  - TCP conf at:
 
+## Enclosure
+The enclusure was projected in FreeCad and 3D printed:
+
+![image](https://user-images.githubusercontent.com/692043/205404929-21c9e014-b176-4da3-8cc0-6f2511cbea2a.png)
+
+
+
 ## User Interface
 The UI is done through the 16X2 LCD Display, using I2C. 
 The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py
