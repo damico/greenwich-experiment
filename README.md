@@ -5,7 +5,9 @@ RF Clock based on GPS receivers
 This is a hardware and software project, and the main idea behind it is to have a clock with time would be collected by 2 different GPS receivers (Which I call receiver A and receiver B).
 
 ### Main board
-The hardware is based on a BeagleBone Black (BBB) board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image.
+The hardware is based on a BeagleBone Black (BBB) board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image. 
+
+For Debian image, with SD Cards bigger than 4GB, expand your file system to be able to use all SD Card space `sudo /opt/scripts/tools/grow_partition.sh`
 
 <img src="https://user-images.githubusercontent.com/692043/205400812-4b35fe3a-920d-423e-b293-6fd904ef0984.png" alt="BBB" width="200"/>
 
@@ -32,9 +34,11 @@ The Ublox modules talks with BeagleBone Black (BBB) using UARTs. In this project
 
 However these UARTs needs to be accessible. For that, the /boot/uEnv.txt file of BeagleBone Black must be edited with this line `capemgr.enable_partno=BB-UART1,BB-UART4`
 
-The main software that controls the GPS receiver is the GPSD, which is available on Debian 10. There are 2 main configurations in GPSD:
- - Receivers conf at: 
- - TCP conf at:
+The main software that controls the GPS receiver is the GPSD, which is available on Debian 10. 
+The installation of GPSD is done by: `sudo apt-get install gpsd`.
+There are 2 main configurations in GPSD:
+ - Receivers conf at **/etc/default/gpsd** where devices must be declared as `DEVICES="/dev/ttyO1 /dev/ttyO4"` and options as `GPSD_OPTIONS="-G"`
+ - TCP conf at **/lib/systemd/system/gpsd.socket** where ListenStream must be declared as `ListenStream=0.0.0.0:2947`
 
 ## Enclosure
 The enclusure was projected in FreeCad and 3D printed:
