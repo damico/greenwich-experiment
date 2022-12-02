@@ -30,7 +30,7 @@ The Ublox modules talks with BeagleBone Black (BBB) using UARTs. In this project
  - UART1 (Pins P9_26 RX and	P9_24 TX)	/dev/ttyO1
  - UART4 (Pins P9_11 RX and	P9_13 TX)	/dev/ttyO4 
 
-However these UARTs needs to be accessible. For that, the uEnv.txt file of BeagleBone Black must be edited with this line `capemgr.enable_partno=BB-UART1,BB-UART4`
+However these UARTs needs to be accessible. For that, the /boot/uEnv.txt file of BeagleBone Black must be edited with this line `capemgr.enable_partno=BB-UART1,BB-UART4`
 
 The main software that controls the GPS receiver is the GPSD, which is available on Debian 10. There are 2 main configurations in GPSD:
  - Receivers conf at: 
