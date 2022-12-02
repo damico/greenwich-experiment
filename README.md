@@ -5,7 +5,7 @@ RF Clock based on GPS receivers
 This is a hardware and software project, and the main idea behind it is to have a clock with time would be collected by 2 different GPS receivers (Which I call receiver A and receiver B).
 
 ### Main board
-The hardware is based on a BeagleBone Black board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image.
+The hardware is based on a BeagleBone Black (BBB) board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image.
 
 <img src="https://user-images.githubusercontent.com/692043/205400812-4b35fe3a-920d-423e-b293-6fd904ef0984.png" alt="BBB" width="200"/>
 
@@ -26,7 +26,7 @@ Ublox Neo 6 MV2
 
 
 ## GPS receivers communication
-The Ublox modules talks with BeagleBone Black using UARTs. In this project the UARTs used are: 
+The Ublox modules talks with BeagleBone Black (BBB) using UARTs. In this project the UARTs used are: 
  - UART1 (Pins P9_26 RX and	P9_24 TX)	/dev/ttyO1
  - UART4 (Pins P9_11 RX and	P9_13 TX)	/dev/ttyO4 
 
@@ -41,6 +41,11 @@ The enclusure was projected in FreeCad and 3D printed:
 
 ![image](https://user-images.githubusercontent.com/692043/205404929-21c9e014-b176-4da3-8cc0-6f2511cbea2a.png)
 
+The LCD part was based on this work: https://www.thingiverse.com/thing:614241
+
+## Power Supply
+All boards work fine with USB power, but I've also added support for 3.7V 18650 battery, using the battery pins (TP5, TP8) of BBB:
+![image](https://user-images.githubusercontent.com/692043/205405374-4c6b6b5f-155f-4b55-976a-73207c21117d.png)
 
 
 ## User Interface
