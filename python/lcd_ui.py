@@ -2,6 +2,8 @@
 
 import smbus
 import time
+import os
+import psutil
 
 # device parameters
 I2C_ADDR  = 0x3f # I2C device address
@@ -75,17 +77,48 @@ def lcd_string(message,line):
   for i in range(LCD_WIDTH):
     lcd_byte(ord(message[i]),LCD_CHR)
 
-def main():
-  # Main program block
+def checkIfProcessRunning(processName):
+  for proc in psutil.process_iter():
+    try:
+      if processName.lower() in proc.name().lower():
+        return True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        pass
+    return False
 
-  # Initialise display
+
+def get_init_proc():
+  proc = 'PID BAD'
+  if checkIfProcessRunning('java'):
+    proc = 'PID OK'
+  m = 'INIT ('+proc+')'
+  return m
+
+def handle_exc():
+  lcd_string('UI ERROR', LCD_LINE_1)
+
+def proc_msg(f, l):
+  m = ''
+  if os.path.exists(f):
+    with open(f) as file:
+      lines = file.readlines()
+      m = lines[0]
+  else: m = get_init_proc()
+  if l == 1: lcd_string(m, LCD_LINE_1)
+  if l == 2: lcd_string(m, LCD_LINE_2)
+
+
+def main():
+  fA = '/tmp/_dev_ttyO4.gps'
+  fB = '/tmp/_dev_ttyO1.gps'
   lcd_init()
 
   while True:
-
-    # Send some test
-    lcd_string("t1",LCD_LINE_1)
-    lcd_string("t2C LCD        <",LCD_LINE_2)
+    try:
+      proc_msg(fA, 1)
+      proc_msg(fB, 2)
+    except:
+      handle_exc()
     time.sleep(1)
 
 if __name__ == '__main__':
