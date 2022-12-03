@@ -6,10 +6,10 @@ import os
 import psutil
 
 # device parameters
-I2C_ADDR  = 0x3f # I2C device address
-#I2C_ADDR  = 0x27
-LCD_WIDTH = 20   # Maximum characters per line
-#LCD_WIDTH = 16
+#I2C_ADDR  = 0x70 # I2C device address
+I2C_ADDR  = 0x27
+#LCD_WIDTH = 20   # Maximum characters per line
+LCD_WIDTH = 16
 
 # device constants
 LCD_CHR = 1 # Mode - Will Send Data
