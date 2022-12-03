@@ -84,7 +84,7 @@ def checkIfProcessRunning(processName):
         return True
     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
         pass
-    return False
+  return False
 
 
 def get_init_proc(l):
