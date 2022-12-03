@@ -95,7 +95,9 @@ def get_init_proc():
   return m
 
 def handle_exc():
-  lcd_string('UI ERROR', LCD_LINE_1)
+  m = 'UI ERROR'
+  lcd_string(m, LCD_LINE_1)
+  print(m)
 
 def proc_msg(f, l):
   m = ''
@@ -104,8 +106,10 @@ def proc_msg(f, l):
       lines = file.readlines()
       m = lines[0]
   else: m = get_init_proc()
-  if l == 1: lcd_string(m, LCD_LINE_1)
-  if l == 2: lcd_string(m, LCD_LINE_2)
+  if l == 1: addr = LCD_LINE_1
+  if l == 2: addr = LCD_LINE_2
+  lcd_string(m, addr)
+  print(m, l)
 
 
 def main():
