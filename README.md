@@ -7,7 +7,9 @@ This is a hardware and software project, and the main idea behind it is to have 
 ### Main board
 The hardware is based on a BeagleBone Black (BBB) board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image. 
 
-For Debian image, with SD Cards bigger than 4GB, expand your file system to be able to use all SD Card space `sudo /opt/scripts/tools/grow_partition.sh`
+For Debian image, with SD Cards bigger than 4GB, expand your file system to be able to use all SD Card space `sudo /opt/scripts/tools/grow_partition.sh`. Also to reduce power consumption is important to decrease the cpu frequency. It can be done by editing file **/etc/init.d/cpufrequtils** and changing governor key to `GOVERNOR="powersave"` and then running the following command `systemctl daemon-reload`. Other thing to decrease power consumption is disable HDMI and AUDIO, and this can be done by updating **/boot/uEnv.txt** and adding the following line: `cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN` and `disable_uboot_overlay_video=1` and `disable_uboot_overlay_audio=1`.
+
+
 
 <img src="https://user-images.githubusercontent.com/692043/205400812-4b35fe3a-920d-423e-b293-6fd904ef0984.png" alt="BBB" width="200"/>
 
