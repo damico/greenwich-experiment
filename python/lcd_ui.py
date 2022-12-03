@@ -87,11 +87,11 @@ def checkIfProcessRunning(processName):
     return False
 
 
-def get_init_proc():
+def get_init_proc(l):
   proc = 'PID BAD'
   if checkIfProcessRunning('java'):
     proc = 'PID OK'
-  m = 'INIT ('+proc+')'
+  m = 'INIT ('+proc+') '+str(l)
   return m
 
 def handle_exc():
@@ -105,7 +105,7 @@ def proc_msg(f, l):
     with open(f) as file:
       lines = file.readlines()
       m = lines[0]
-  else: m = get_init_proc()
+  else: m = get_init_proc(l)
   if l == 1: addr = LCD_LINE_1
   if l == 2: addr = LCD_LINE_2
   lcd_string(m, addr)
