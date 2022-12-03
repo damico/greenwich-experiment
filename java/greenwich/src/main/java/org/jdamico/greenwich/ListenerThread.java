@@ -102,7 +102,12 @@ public class ListenerThread extends Thread {
 				while (keySetIter.hasNext()) {
 					String key = keySetIter.next(); 
 					String log = usedSatsMap.get(key)+fixMap.get(key)+timeMap.get(key)+"T"+tzMap.get(key);
-					if(log.contains("null")) log = "- INVALID DATA -";
+					if(log.contains("null")) {
+						
+						System.out.println(log);
+						log = "- INVALID DATA -";
+						
+					}
 					if(key.equals("/dev/ttyO4")) log = "A"+log;
 					if(key.equals("/dev/ttyO1")) log = "B"+log;
 					System.out.println("-------------> "+key+" "+log);
