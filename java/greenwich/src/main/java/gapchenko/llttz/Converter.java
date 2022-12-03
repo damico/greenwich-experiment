@@ -48,7 +48,7 @@ public class Converter implements IConverter {
 
 		try {
 			String[] location;
-			File source = new File("/opt/timezones.csv");
+			File source = new File("/dist/timezones.csv");
 			if(source != null && source.exists() && source.isFile()) {
 				Path path = source.toPath();
 
