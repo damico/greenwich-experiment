@@ -55,4 +55,4 @@ All boards work fine with USB power, but I've also added support for 3.7V 18650 
 
 ## User Interface
 The UI is done through the 16X2 LCD Display, using I2C. 
-The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py
+The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py . At **python/** folder there is a lcd_ui.py file which handles the messages into the display. This code requires **psutil** module (`pip3 install psutil`).
