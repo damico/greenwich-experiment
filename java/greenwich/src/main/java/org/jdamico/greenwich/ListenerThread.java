@@ -37,7 +37,8 @@ public class ListenerThread extends Thread {
 		Map<String, String> fixMap = new HashMap<>();
 		Map<String, String> timeMap = new HashMap<>();
 		Map<String, String> tzMap = new HashMap<>();
-
+		String tzOffset = "---";
+		
 		while(TimeSpaceRuntime.shouldListenOutput) {
 			try {
 				if(TimeSpaceRuntime.outputMessageMap.containsKey("WATCH") && TimeSpaceRuntime.outputMessageMap.containsKey("TPV") && TimeSpaceRuntime.outputMessageMap.containsKey("WATCH") && TimeSpaceRuntime.outputMessageMap.containsKey("DEVICES") && TimeSpaceRuntime.outputMessageMap.containsKey("SKY")) {
@@ -61,12 +62,10 @@ public class ListenerThread extends Thread {
 
 
 					String lastTz = tzMap.get(device);
-					if(lastTz == null) tzMap.put(device, "---");
+					if(lastTz == null) tzMap.put(device, tzOffset);
 					if(gpsSkyEntity.getGdop() !=null && gpsSkyEntity.getGdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION && gpsSkyEntity.getPdop() !=null && gpsSkyEntity.getPdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION) {
 
-
 						fixMap.put(device, "*");
-
 
 
 					}else if(gpsSkyEntity.getHdop() !=null && gpsSkyEntity.getHdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION && gpsSkyEntity.getVdop() !=null && gpsSkyEntity.getVdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION) {	
@@ -82,7 +81,7 @@ public class ListenerThread extends Thread {
 
 							TimeZone tz = iconv.getTimeZone(Y, X);
 							int offset = tz.getRawOffset()/3600000;
-							String tzOffset = "---";
+							
 							if(offset>0 && offset <10) tzOffset = "0"+String.valueOf(offset);
 							else if(offset < 0 && offset > -10) tzOffset = "-0"+String.valueOf(offset*-1);
 							else if((offset > 0 && offset < 1) || (offset < 0 && offset > -1)) tzOffset = "000";
@@ -102,7 +101,7 @@ public class ListenerThread extends Thread {
 				while (keySetIter.hasNext()) {
 					String key = keySetIter.next(); 
 					String sats = "--";
-					String tz = "---";
+					String tz = tzOffset;
 					if(usedSatsMap.get(key) != null) sats = usedSatsMap.get(key);
 					if(tzMap.get(key) != null) tz = tzMap.get(key);
 					String log = sats+fixMap.get(key)+timeMap.get(key)+"T"+tz;
