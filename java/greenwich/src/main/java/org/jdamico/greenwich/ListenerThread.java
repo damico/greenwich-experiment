@@ -101,7 +101,11 @@ public class ListenerThread extends Thread {
 				Iterator<String> keySetIter = keySet.iterator();
 				while (keySetIter.hasNext()) {
 					String key = keySetIter.next(); 
-					String log = usedSatsMap.get(key)+fixMap.get(key)+timeMap.get(key)+"T"+tzMap.get(key);
+					String sats = "--";
+					String tz = "---";
+					if(usedSatsMap.get(key) != null) sats = usedSatsMap.get(key);
+					if(tzMap.get(key) != null) tz = tzMap.get(key);
+					String log = sats+fixMap.get(key)+timeMap.get(key)+"T"+tz;
 					if(log.contains("null")) {
 						
 						System.out.println(log);
