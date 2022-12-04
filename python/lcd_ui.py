@@ -94,14 +94,14 @@ def get_init_proc(l, c):
   if checkIfProcessRunning('java'):
     proc = 'PID OK'
   m = 'INIT ('+proc+') '+str(l)
-  m = m.preplace(' ', sep)
+  m = m.replace(' ', sep)
   return m
 
 def handle_exc(c):
   sep = " "
   if c % 2 == 0: sep = "-"
   m = 'UI ERROR'
-  m = m.preplace(' ', sep)
+  m = m.replace(' ', sep)
   lcd_string(m, LCD_LINE_1)
   print(m)
 
@@ -116,7 +116,7 @@ def proc_msg(f, l, c):
   else: m = get_init_proc(l,c)
   if l == 1: addr = LCD_LINE_1
   if l == 2: addr = LCD_LINE_2
-  m = m.preplace(':', sep)
+  m = m.replace(':', sep)
   lcd_string(m, addr)
   print(m, l)
 
