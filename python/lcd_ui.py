@@ -87,43 +87,55 @@ def checkIfProcessRunning(processName):
   return False
 
 
-def get_init_proc(l):
+def get_init_proc(l, c):
+  sep = " "
+  if c % 2 == 0: sep = "-"
   proc = 'PID BAD'
   if checkIfProcessRunning('java'):
     proc = 'PID OK'
   m = 'INIT ('+proc+') '+str(l)
+  m = m.preplace(' ', sep)
   return m
 
-def handle_exc():
+def handle_exc(c):
+  sep = " "
+  if c % 2 == 0: sep = "-"
   m = 'UI ERROR'
+  m = m.preplace(' ', sep)
   lcd_string(m, LCD_LINE_1)
   print(m)
 
-def proc_msg(f, l):
+def proc_msg(f, l, c):
+  sep = ":"
+  if c % 2 == 0: sep = "."
   m = ''
   if os.path.exists(f):
     with open(f) as file:
       lines = file.readlines()
       m = lines[0]
-  else: m = get_init_proc(l)
+  else: m = get_init_proc(l,c)
   if l == 1: addr = LCD_LINE_1
   if l == 2: addr = LCD_LINE_2
+  m = m.preplace(':', sep)
   lcd_string(m, addr)
   print(m, l)
 
 
 def main():
+  counter = 0
   fA = '/tmp/_dev_ttyO4.gps'
   fB = '/tmp/_dev_ttyO1.gps'
   lcd_init()
 
   while True:
     try:
-      proc_msg(fA, 1)
-      proc_msg(fB, 2)
+      proc_msg(fA, 1, counter)
+      proc_msg(fB, 2, counter)
     except:
-      handle_exc()
+      handle_exc(counter)
     time.sleep(1)
+    counter = counter +1
+
 
 if __name__ == '__main__':
 
