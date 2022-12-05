@@ -27,9 +27,10 @@ public class ListenerThread extends Thread {
 	public static Double Z = null;
 	public String statusChar = "!";
 
-	IConverter iconv = Converter.getInstance(TimeZoneListStore.class);
+	IConverter iconv = null;
 
 	public void run() {
+		iconv = Converter.getInstance(TimeZoneListStore.class);
 		Gson gson = new Gson();
 		GpsSkyEntity gpsSkyEntity;
 		GpsTpvEntity gpsTpvEntity;
@@ -68,7 +69,9 @@ public class ListenerThread extends Thread {
 						fixMap.put(device, "*");
 
 
-					}else if(gpsSkyEntity.getHdop() !=null && gpsSkyEntity.getHdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION && gpsSkyEntity.getVdop() !=null && gpsSkyEntity.getVdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION) {	
+					}
+					
+					if(gpsSkyEntity.getHdop() !=null && gpsSkyEntity.getHdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION && gpsSkyEntity.getVdop() !=null && gpsSkyEntity.getVdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION) {	
 
 						X = gpsTpvEntity.getLon();
 						Y = gpsTpvEntity.getLat();
@@ -81,13 +84,16 @@ public class ListenerThread extends Thread {
 
 							TimeZone tz = iconv.getTimeZone(Y, X);
 							int offset = tz.getRawOffset()/3600000;
-							
-							if(offset>0 && offset <10) tzOffset = "0"+String.valueOf(offset);
+	
+							if(offset>=0 && offset <10) tzOffset = "0"+String.valueOf(offset);
 							else if(offset < 0 && offset > -10) tzOffset = "-0"+String.valueOf(offset*-1);
 							else if((offset > 0 && offset < 1) || (offset < 0 && offset > -1)) tzOffset = "000";
+							
 							tzMap.put(device, tzOffset);
 
-						}else if(X != null && Y!=null && Z!=null){
+						}
+						
+						if(X != null && Y!=null && Z!=null){
 							fixMap.put(device, "|");
 						}
 					}else {

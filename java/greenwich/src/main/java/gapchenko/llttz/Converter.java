@@ -48,12 +48,12 @@ public class Converter implements IConverter {
 
 		try {
 			String[] location;
-			File source = new File("/dist/timezones.csv");
+			File source = new File("dist/timezones.csv");
 			if(source != null && source.exists() && source.isFile()) {
 				Path path = source.toPath();
 
 				List<String> lst = Files.readAllLines(path);
-
+				
 				for (int i = 0; i < lst.size(); i++) {
 					location = lst.get(i).split(";");
 					tzStore.insert(new Location(Double.valueOf(location[1]), Double.valueOf(location[2]), location[0]));
