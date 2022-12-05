@@ -56,7 +56,7 @@ public class ListenerThread extends Thread {
 					}
 
 					gpsTpvEntity = gson.fromJson(TimeSpaceRuntime.outputMessageMap.get("TPV"), GpsTpvEntity.class);
-					if(sats.size() > 0 && gpsTpvEntity.getTime() != null && gpsTpvEntity.getTime().length() == 24) {
+					if(gpsTpvEntity.getTime() != null && gpsTpvEntity.getTime().length() == 24) {
 						timeMap.put(gpsTpvEntity.getDevice(), gpsTpvEntity.getTime().split("T")[1].split("\\.")[0]);
 					}
 
