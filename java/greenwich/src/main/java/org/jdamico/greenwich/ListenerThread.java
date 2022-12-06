@@ -39,7 +39,7 @@ public class ListenerThread extends Thread {
 		Map<String, String> timeMap = new HashMap<>();
 		Map<String, String> tzMap = new HashMap<>();
 		String tzOffset = "---";
-		
+
 		while(TimeSpaceRuntime.shouldListenOutput) {
 			try {
 				if(TimeSpaceRuntime.outputMessageMap.containsKey("WATCH") && TimeSpaceRuntime.outputMessageMap.containsKey("TPV") && TimeSpaceRuntime.outputMessageMap.containsKey("WATCH") && TimeSpaceRuntime.outputMessageMap.containsKey("DEVICES") && TimeSpaceRuntime.outputMessageMap.containsKey("SKY")) {
@@ -70,7 +70,7 @@ public class ListenerThread extends Thread {
 
 
 					}
-					
+
 					if(gpsSkyEntity.getHdop() !=null && gpsSkyEntity.getHdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION && gpsSkyEntity.getVdop() !=null && gpsSkyEntity.getVdop() < TimeSpaceRuntime.DOP_MINIMAL_PRECISION) {	
 
 						X = gpsTpvEntity.getLon();
@@ -81,18 +81,20 @@ public class ListenerThread extends Thread {
 						if(X != null && Y!=null) {
 
 							usedSatsMap.put(device, sumUsedSats >= 0 && sumUsedSats < 10 ? "0"+String.valueOf(sumUsedSats): String.valueOf(sumUsedSats) );
+							try {
+								TimeZone tz = iconv.getTimeZone(Y, X);
+								int offset = tz.getRawOffset()/3600000;
 
-							TimeZone tz = iconv.getTimeZone(Y, X);
-							int offset = tz.getRawOffset()/3600000;
-	
-							if(offset>=0 && offset <10) tzOffset = "0"+String.valueOf(offset);
-							else if(offset < 0 && offset > -10) tzOffset = "-0"+String.valueOf(offset*-1);
-							else if((offset > 0 && offset < 1) || (offset < 0 && offset > -1)) tzOffset = "000";
-							
+								if(offset>=0 && offset <10) tzOffset = "0"+String.valueOf(offset);
+								else if(offset < 0 && offset > -10) tzOffset = "-0"+String.valueOf(offset*-1);
+								else if((offset > 0 && offset < 1) || (offset < 0 && offset > -1)) tzOffset = "000";
+							}catch (Exception e) {
+								tzOffset = "000";
+							}
 							tzMap.put(device, tzOffset);
 
 						}
-						
+
 						if(X != null && Y!=null && Z!=null){
 							fixMap.put(device, "|");
 						}
@@ -112,10 +114,10 @@ public class ListenerThread extends Thread {
 					if(tzMap.get(key) != null) tz = tzMap.get(key);
 					String log = sats+fixMap.get(key)+timeMap.get(key)+"T"+tz;
 					if(log.contains("null")) {
-						
+
 						System.out.println(log);
 						log = "- INVALID DATA -";
-						
+
 					}
 					if(key.equals("/dev/ttyO4")) log = "A"+log;
 					if(key.equals("/dev/ttyO1")) log = "B"+log;
