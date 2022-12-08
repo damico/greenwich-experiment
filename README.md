@@ -62,4 +62,8 @@ All boards work fine with USB power, but I've also added support for 3.7V 18650 
 
 ## User Interface
 The UI is done through the 16X2 LCD Display, using I2C. 
-The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py . At **python/** folder there is a lcd_ui.py file which handles the messages into the display. This code requires **psutil** module (`pip3 install psutil`).
+The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py . At **python/** folder there is a lcd_ui.py file which handles the messages into the display. This code requires **psutil** module (`pip3 install psutil`). This code only gets the text data from the files created/updated by the **Time/Location Engine** and displays it on LCD.
+
+## Time/Location Engine
+Most of the hard work in terms of software is done by **gpsd** running on Linux, however there are 2 portions of code that I've wrote (both in Java), which grabs the data from gpsd. The first one is the **gpsd.client** (https://github.com/damico/gpsd.client) and the second one is the **greenwich**, that is pushed in this repository (in java/greenwich directory). Both are compiled with maven, but for gpsd.client you should run `mvn clean install -DskipTests`, while for greenwich you should run `mvn clean install -DskipTests package`. Once the .jar package of greenwich was generated, you can run it with this command **java -jar name-of-package.jar**. When the greenwich starts to run it creates 2 files (_dev_ttyO1.gps and _dev_ttyO4.gps) in **/tmp** directory, these files has the GPS Fix data, Satellites data, Time Data and Time zone data. 
+
