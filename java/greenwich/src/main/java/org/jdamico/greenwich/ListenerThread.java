@@ -108,7 +108,7 @@ public class ListenerThread extends Thread {
 				Iterator<String> keySetIter = keySet.iterator();
 				while (keySetIter.hasNext()) {
 					String key = keySetIter.next(); 
-					String sats = "--";
+					String sats = "00";
 					String tz = tzOffset;
 					if(usedSatsMap.get(key) != null) sats = usedSatsMap.get(key);
 					if(tzMap.get(key) != null) tz = tzMap.get(key);
