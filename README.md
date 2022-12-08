@@ -1,5 +1,5 @@
 # greenwich-experiment
-RF Clock based on GPS receivers
+Radio-Controlled Clock based on GPS receivers
 
 ## Introduction
 This is a hardware and software project, and the main idea behind it is to have a clock with time would be collected by 2 different GPS receivers (Which I call receiver A and receiver B).
