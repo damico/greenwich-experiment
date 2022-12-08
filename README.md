@@ -1,8 +1,13 @@
 # greenwich-experiment
 Radio-Controlled Clock based on GPS receivers
 
+<img src="https://github.com/damico/greenwich-experiment/blob/main/design/model.png?raw=true" alt="Working hardware" width="500"/>
+
 ## Introduction
-This is a hardware and software project, and the main idea behind it is to have a clock with time would be collected by 2 different GPS receivers (Which I call receiver A and receiver B).
+This is a hardware and software project, and the main idea behind it is to have a clock with time would be collected by 2 different GPS receivers (Which I call receiver A and receiver B). **This is not a GPS disciplined oscillator.**
+
+If you want to know more about  Radio-Controlled Clocks, there is an excelent text written by Michael A. Lombardi from
+ National Institute of Standards and Technology (NIST), which can be found here: https://tf.nist.gov/general/pdf/1877.pdf
 
 ### Main board
 The hardware is based on a BeagleBone Black (BBB) board, which uses [AM3358 Debian 10.3 2020-04-06 4GB SD IoT] (https://debian.beagleboard.org/images/bone-debian-10.3-iot-armhf-2020-04-06-4gb.img.xz) image. 
