@@ -67,3 +67,6 @@ The software which controls de LCD is written in Python 3 and was based on the w
 ## Time/Location Engine
 Most of the hard work in terms of software is done by **gpsd** running on Linux, however there are 2 portions of code that I've wrote (both in Java), which grabs the data from gpsd. The first one is the **gpsd.client** (https://github.com/damico/gpsd.client) and the second one is the **greenwich**, that is pushed in this repository (in java/greenwich directory). Both are compiled with maven, but for gpsd.client you should run `mvn clean install -DskipTests`, while for greenwich you should run `mvn clean install -DskipTests package`. Once the .jar package of greenwich was generated, you can run it with this command **java -jar name-of-package.jar**. When the greenwich starts to run it creates 2 files (_dev_ttyO1.gps and _dev_ttyO4.gps) in **/tmp** directory, these files has the GPS Fix data, Satellites data, Time Data and Time zone data. 
 
+## SO integration/automation
+In order to have all parts of software working togetter, I've made some bash scripts to install the user interface in python and the time/location engine in java as a init.d service. Take a look at **shell/** directory of this repository to understand how to use it.
+
