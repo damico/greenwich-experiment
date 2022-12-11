@@ -57,12 +57,15 @@ The LCD part was based on this work: https://www.thingiverse.com/thing:614241
 
 ## Power Supply
 All boards work fine with USB power, but I've also added support for 3.7V 18650 battery, using the battery pins (TP5, TP8) of BBB:
+
 ![image](https://user-images.githubusercontent.com/692043/205405374-4c6b6b5f-155f-4b55-976a-73207c21117d.png)
 
 
 ## User Interface
 The UI is done through the 16X2 LCD Display, using I2C. 
 The software which controls de LCD is written in Python 3 and was based on the work of MilesBDyson, which can be found here: https://github.com/MilesBDyson/I2C-LCD/blob/master/lcd_i2c.py . At **python/** folder there is a lcd_ui.py file which handles the messages into the display. This code requires **psutil** module (`pip3 install psutil`). This code only gets the text data from the files created/updated by the **Time/Location Engine** and displays it on LCD.
+
+In order to make python control the I2C LCD you will need to know the I2C address where the LCD board was connected. For this, first use this command `ls -l /dev/i2c*` to discover if your BBB sees the I2C adapters. It should send a response with at least 1 device. Then, you need to test the adapders with this command `i2cdetect -l`. It should respond with at least this adapter **i2c-0 OMAP I2C adapter**. Finally you need to discover the alocated addresses per adapter, with this command: `i2cdetect -r 0`
 
 ## Time/Location Engine
 Most of the hard work in terms of software is done by **gpsd** running on Linux, however there are 2 portions of code that I've wrote (both in Java), which grabs the data from gpsd. The first one is the **gpsd.client** (https://github.com/damico/gpsd.client) and the second one is the **greenwich**, that is pushed in this repository (in java/greenwich directory). Both are compiled with maven, but for gpsd.client you should run `mvn clean install -DskipTests`, while for greenwich you should run `mvn clean install -DskipTests package`. Once the .jar package of greenwich was generated, you can run it with this command **java -jar name-of-package.jar**. When the greenwich starts to run it creates 2 files (_dev_ttyO1.gps and _dev_ttyO4.gps) in **/tmp** directory, these files has the GPS Fix data, Satellites data, Time Data and Time zone data. 
